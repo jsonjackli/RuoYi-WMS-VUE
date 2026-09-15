@@ -46,6 +46,7 @@
           :loading="loading"
           size="large"
           type="primary"
+          class="login-btn"
           style="width:45%;"
           @click.prevent="handleLogin"
         >
@@ -55,6 +56,7 @@
         <el-button
           size="large"
           type="primary"
+          class="try-btn"
           style="width:45%;"
           @click.native.prevent="handleTry"
         >
@@ -184,8 +186,35 @@ getCookie();
 </script>
 
 <style lang='scss' scoped>
+// 浅色（默认）：绿色背景 + 白色登录卡片
+// 正文/提示文本与白底对比度 >= 4.5:1，UI 边界 >= 3:1
+$login-bg-base: #1F6F58;
+$login-bg-mid: #26795F;
+$login-bg-deep: #1B5E4A;
+$login-text: #303133; // 白底 12.6:1
+$login-text-muted: #595959; // 白底 7.0:1
+$login-border: #767676; // 白底 4.5:1
+$login-accent: #1D4ED8; // 深蓝，白底 6.7:1
+$login-accent-hover: #1E40AF;
+$login-accent-active: #1E3A8A;
+
+// 深色（prefers-color-scheme: dark）：近黑绿背景 + 深色卡片
+$dark-bg-base: #0A2018;
+$dark-bg-mid: #0F2E21;
+$dark-bg-deep: #06140E;
+$dark-surface: #1C1C1C;
+$dark-field: #121212;
+$dark-text: #F5F5F5; // 深色卡片 15.6:1
+$dark-text-muted: #C8C8C8; // 深色卡片 10.2:1
+$dark-border: #8A8A8A; // 深色卡片 4.9:1
+$dark-accent: #93C5FD; // 深色卡片 9.5:1
+$dark-btn-bg: #60A5FA;
+$dark-btn-bg-hover: #93C5FD;
+$dark-btn-bg-active: #BFDBFE;
+$dark-btn-text: #0B1F17; // 与 #60A5FA 对比 6.8:1
+
 .color-main {
-  color: #409EFF;
+  color: $login-accent;
 }
 .font-extra-large {
   font-size: 20px;
@@ -195,18 +224,22 @@ getCookie();
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
+  background-color: $login-bg-base;
+  background-image: linear-gradient(160deg, $login-bg-deep 0%, $login-bg-mid 50%, $login-bg-base 100%);
+  background-repeat: no-repeat;
   background-size: cover;
 }
 .title {
   margin: 0px auto 30px auto;
   text-align: center;
-  color: #707070;
+  color: $login-text;
 }
 
 .login-form {
   border-radius: 6px;
   background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
   width: 400px;
   padding: 25px 25px 5px 25px;
   .el-input {
@@ -219,12 +252,82 @@ getCookie();
     height: 39px;
     width: 14px;
     margin-left: 0px;
+    color: #606266;
+  }
+  // 输入框保持白底，边框加深以保证可见性
+  :deep(.el-input__wrapper) {
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1px $login-border inset;
+
+    &:hover,
+    &.is-focus {
+      box-shadow: 0 0 0 1px $login-accent inset;
+    }
+  }
+  :deep(.el-input__inner) {
+    color: $login-text;
+  }
+  :deep(.el-input__inner::placeholder) {
+    color: $login-border;
+  }
+  :deep(.el-checkbox__label) {
+    color: $login-text;
+  }
+  :deep(.el-checkbox__inner) {
+    border-color: $login-border;
+  }
+  .link-type,
+  .link-type:focus {
+    color: $login-accent;
+
+    &:hover {
+      color: $login-accent-active;
+    }
+  }
+  // 主按钮：深蓝，与白色卡片、绿色背景均形成明显区分
+  .login-btn {
+    background-color: $login-accent;
+    border-color: $login-accent;
+    color: #ffffff;
+    font-weight: 600;
+
+    &:hover,
+    &:focus {
+      background-color: $login-accent-hover;
+      border-color: $login-accent-hover;
+      color: #ffffff;
+    }
+
+    &:active {
+      background-color: $login-accent-active;
+      border-color: $login-accent-active;
+      color: #ffffff;
+    }
+  }
+  // 次级按钮：白底描边，不与主按钮争夺视觉焦点
+  .try-btn {
+    background-color: #ffffff;
+    border-color: #606266;
+    color: $login-text;
+
+    &:hover,
+    &:focus {
+      background-color: #eef4f1;
+      border-color: $login-accent;
+      color: $login-accent;
+    }
+
+    &:active {
+      background-color: #dde8e3;
+      border-color: $login-accent-active;
+      color: $login-accent-active;
+    }
   }
 }
 .login-tip {
   font-size: 13px;
   text-align: center;
-  color: #bfbfbf;
+  color: $login-text-muted;
 }
 .login-code {
   width: 33%;
@@ -242,7 +345,8 @@ getCookie();
   bottom: 0;
   width: 100%;
   text-align: center;
-  color: #fff;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
   font-family: Arial;
   font-size: 12px;
   letter-spacing: 1px;
@@ -250,5 +354,184 @@ getCookie();
 .login-code-img {
   height: 40px;
   padding-left: 12px;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+// 深色模式：背景改为深绿/近黑，卡片与文本反色
+@media (prefers-color-scheme: dark) {
+  .login {
+    background-color: $dark-bg-base;
+    background-image: linear-gradient(160deg, $dark-bg-deep 0%, $dark-bg-mid 50%, $dark-bg-base 100%);
+  }
+  .login-form {
+    background: $dark-surface;
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+
+    .input-icon {
+      color: #D4D4D4;
+    }
+    :deep(.el-input__wrapper) {
+      background-color: $dark-field;
+      box-shadow: 0 0 0 1px $dark-border inset;
+
+      &:hover,
+      &.is-focus {
+        box-shadow: 0 0 0 1px $dark-accent inset;
+      }
+    }
+    :deep(.el-input__inner) {
+      color: $dark-text;
+    }
+    :deep(.el-input__inner::placeholder) {
+      color: #A3A3A3;
+    }
+    :deep(.el-checkbox__label) {
+      color: $dark-text;
+    }
+    :deep(.el-checkbox__inner) {
+      background-color: $dark-field;
+      border-color: $dark-border;
+    }
+    .link-type,
+    .link-type:focus {
+      color: $dark-accent;
+
+      &:hover {
+        color: #BFDBFE;
+      }
+    }
+    .login-btn {
+      background-color: $dark-btn-bg;
+      border-color: $dark-btn-bg;
+      color: $dark-btn-text;
+
+      &:hover,
+      &:focus {
+        background-color: $dark-btn-bg-hover;
+        border-color: $dark-btn-bg-hover;
+        color: $dark-btn-text;
+      }
+
+      &:active {
+        background-color: $dark-btn-bg-active;
+        border-color: $dark-btn-bg-active;
+        color: $dark-btn-text;
+      }
+    }
+    .try-btn {
+      background-color: #2A2A2A;
+      border-color: #D4D4D4;
+      color: $dark-text;
+
+      &:hover,
+      &:focus {
+        background-color: #3A3A3A;
+        border-color: $dark-accent;
+        color: $dark-accent;
+      }
+
+      &:active {
+        background-color: #454545;
+        border-color: $dark-accent;
+        color: $dark-accent;
+      }
+    }
+  }
+  .title {
+    color: $dark-text;
+  }
+  .login-tip {
+    color: $dark-text-muted;
+  }
+  .color-main {
+    color: $dark-accent;
+  }
+  .el-login-footer {
+    color: #E8E8E8;
+    text-shadow: none;
+  }
+  .login-code-img {
+    background-color: #ffffff;
+  }
+}
+
+// 强制色模式：使用系统级高对比度配色，移除背景图与阴影
+@media (forced-colors: active) {
+  .login {
+    background-color: Canvas;
+    background-image: none;
+  }
+  .login-form {
+    background: Canvas;
+    border: 1px solid CanvasText;
+    box-shadow: none;
+
+    .input-icon {
+      color: CanvasText;
+    }
+    :deep(.el-input__wrapper) {
+      background-color: Field;
+      border: 1px solid FieldText;
+      box-shadow: none;
+    }
+    :deep(.el-input__inner) {
+      color: FieldText;
+    }
+    :deep(.el-input__inner::placeholder) {
+      color: GrayText;
+    }
+    :deep(.el-checkbox__label) {
+      color: CanvasText;
+    }
+    :deep(.el-checkbox__inner) {
+      background-color: Field;
+      border-color: FieldText;
+    }
+    .link-type,
+    .link-type:focus,
+    .link-type:hover {
+      color: LinkText;
+    }
+    .login-btn {
+      background-color: Highlight;
+      border-color: Highlight;
+      color: HighlightText;
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: Highlight;
+        border-color: Highlight;
+        color: HighlightText;
+      }
+    }
+    .try-btn {
+      background-color: ButtonFace;
+      border-color: ButtonText;
+      color: ButtonText;
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: ButtonFace;
+        border-color: ButtonText;
+        color: ButtonText;
+      }
+    }
+  }
+  .title,
+  .login-tip,
+  .color-main {
+    color: CanvasText;
+  }
+  .el-login-footer {
+    color: CanvasText;
+    text-shadow: none;
+  }
+  .login-code-img {
+    background-color: Canvas;
+  }
 }
 </style>
