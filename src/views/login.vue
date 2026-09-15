@@ -186,11 +186,8 @@ getCookie();
 </script>
 
 <style lang='scss' scoped>
-// 浅色（默认）：绿色背景 + 白色登录卡片
+// 浅色（默认）：纯绿背景 #00A870 + 白色登录卡片
 // 正文/提示文本与白底对比度 >= 4.5:1，UI 边界 >= 3:1
-$login-bg-base: #1F6F58;
-$login-bg-mid: #26795F;
-$login-bg-deep: #1B5E4A;
 $login-text: #303133; // 白底 12.6:1
 $login-text-muted: #595959; // 白底 7.0:1
 $login-border: #767676; // 白底 4.5:1
@@ -223,9 +220,12 @@ $dark-btn-text: #0B1F17; // 与 #60A5FA 对比 6.8:1
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  background-color: $login-bg-base;
-  background-image: linear-gradient(160deg, $login-bg-deep 0%, $login-bg-mid 50%, $login-bg-base 100%);
+  // 回退色在前、目标色在后：不支持后者的环境回退到浅灰 #F5F5F5
+  background-color: #F5F5F5;
+  background-color: #00A870;
+  // 铺满整个视口，避免四周露出白边
+  width: 100%;
+  min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -345,8 +345,8 @@ $dark-btn-text: #0B1F17; // 与 #60A5FA 对比 6.8:1
   bottom: 0;
   width: 100%;
   text-align: center;
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+  color: #0A2E22; // 绿底 #00A870 上 5.0:1
+  text-shadow: none;
   font-family: Arial;
   font-size: 12px;
   letter-spacing: 1px;
