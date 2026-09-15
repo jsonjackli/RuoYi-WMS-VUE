@@ -449,7 +449,7 @@ $dark-btn-text: #0B1F17; // 与 #60A5FA 对比 6.8:1
     color: $dark-accent;
   }
   .el-login-footer {
-    color: #E8E8E8;
+    color: $dark-text; // 深色背景 15.6:1
     text-shadow: none;
   }
   .login-code-img {
