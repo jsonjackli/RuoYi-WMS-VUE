@@ -8,6 +8,13 @@ $tiffany: #4AB7BD;
 $yellow: #FEC171;
 $panGreen: #30B08F;
 
+// 登录页背景色
+$login-bg-color: #10B981;
+
+:root {
+  --login-bg-color: #{$login-bg-color};
+}
+
 // 默认菜单主题风格
 $base-menu-color: #bfcbd9;
 $base-menu-color-active: #f4f4f5;
@@ -47,4 +54,5 @@ $base-sidebar-width: 200px;
   dangerColor: $--color-danger;
   infoColor: $--color-info;
   warningColor: $--color-warning;
+  loginBgColor: $login-bg-color;
 }

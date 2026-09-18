@@ -195,7 +195,7 @@ getCookie();
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
+  background-color: var(--login-bg-color, #10B981);
   background-size: cover;
 }
 .title {
