@@ -195,8 +195,11 @@ getCookie();
   justify-content: center;
   align-items: center;
   height: 100%;
+  min-height: 100%;
   background-color: var(--login-bg-color, #10B981);
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .title {
   margin: 0px auto 30px auto;
@@ -250,5 +253,24 @@ getCookie();
 .login-code-img {
   height: 40px;
   padding-left: 12px;
+}
+/* 移动端（<768px）：背景铺满，容器宽度自适应 */
+@media (max-width: 768px) {
+  .login {
+    overflow: auto;
+    padding: 20px 0 60px;
+  }
+  .login-form {
+    width: 90%;
+    margin: auto;
+  }
+  .el-login-footer {
+    font-size: 10px;
+    letter-spacing: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 10px;
+  }
 }
 </style>
