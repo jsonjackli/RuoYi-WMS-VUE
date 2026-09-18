@@ -10,9 +10,17 @@ $panGreen: #30B08F;
 
 // 登录页背景色
 $login-bg-color: #10B981;
+// 登录页深色主题背景色：深绿变体，与白色卡片边界对比度约 3.77:1（浅色主题下为 2.54:1）
+$login-bg-color-dark: #059669;
 
 :root {
   --login-bg-color: #{$login-bg-color};
+  --login-bg-color-dark: #{$login-bg-color-dark};
+}
+
+// 深色主题下覆盖登录页背景色，html.dark 优先级高于 :root
+html.dark {
+  --login-bg-color: #{$login-bg-color-dark};
 }
 
 // 默认菜单主题风格
@@ -55,4 +63,5 @@ $base-sidebar-width: 200px;
   infoColor: $--color-info;
   warningColor: $--color-warning;
   loginBgColor: $login-bg-color;
+  loginBgColorDark: $login-bg-color-dark;
 }

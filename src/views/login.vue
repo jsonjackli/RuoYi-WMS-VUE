@@ -201,6 +201,10 @@ getCookie();
   background-position: center;
   background-repeat: no-repeat;
 }
+/* 深色主题：改用深绿变体，保证绿色背景与白色卡片/文字的边界对比度可读 */
+html.dark .login {
+  background-color: var(--login-bg-color-dark, #059669);
+}
 .title {
   margin: 0px auto 30px auto;
   text-align: center;
